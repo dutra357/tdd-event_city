@@ -4,6 +4,7 @@ import com.devsuperior.demo.dto.EventDTO;
 import com.devsuperior.demo.entities.Event;
 import com.devsuperior.demo.repository.CityRepository;
 import com.devsuperior.demo.repository.EventRepository;
+import com.devsuperior.demo.service.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +21,9 @@ public class EventService {
 
     @Transactional
     public EventDTO update(Long id, EventDTO eventDTO) {
+
         if (!repository.existsById(id)) {
-            
+            throw new ResourceNotFoundException("ID not found!");
         }
 
         Event event = repository.getReferenceById(id);
